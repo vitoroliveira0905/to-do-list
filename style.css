@@ -68,14 +68,35 @@ h1{
 }
 
 .task-list li{
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
 }
 .task-list input{
    scale: 1.7;
    margin-right: 20px;
+   cursor: pointer;
 }
 
 label.checked{
     text-decoration: line-through;
     color: gray;
+}
+
+.right{
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+.left{
+    display: flex;
+    align-items: center;
+}
+.delete{
+   border: none ;
+   cursor: pointer;
+   transition: stroke 0.1s ease-in-out;
+}
+.delete:hover{
+    stroke: rgb(107, 107, 107);
 }

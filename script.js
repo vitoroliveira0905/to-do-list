@@ -14,25 +14,39 @@ form.addEventListener('submit', (e) => {
 taskList.addEventListener('change', (e) => {
     const checkbox = e.target;
     const label = checkbox.parentElement.querySelector('label')
-    if(!label.classList.contains('checked')){
+    if (!label.classList.contains('checked')) {
         label.classList.add('checked')
     }
-    else{
+    else {
         label.classList.remove('checked')
     }
 
 })
 
+taskList.addEventListener('click', e => {
+    const deleteButton = e.target.closest('.delete')
+    if(deleteButton){
+        removeTask(deleteButton.closest('li'));
+    }
+})
+
 function addTask(task, taskList) {
-
-    const li = document.createElement('li');
-    const input = document.createElement('input');
-    const label = document.createElement('label');
+    const li = document.createElement('li');   
     taskList.appendChild(li);
+    li.innerHTML = `<div class="left">
+    <input type="checkbox">
+    <label >${task}</label>
+</div>
+<div class="right">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="gray"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x delete">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+    </svg>
 
-    li.appendChild(input);
-    li.appendChild(label)
+</div>`
+}
 
-    input.type = 'checkbox'
-    label.innerHTML = task
+function removeTask(task){
+    task.remove();
 }
