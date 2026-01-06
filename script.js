@@ -1,4 +1,5 @@
 const form = document.getElementById('task-form');
+const taskList = document.getElementById('task-list');
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -10,7 +11,20 @@ form.addEventListener('submit', (e) => {
 }
 )
 
+taskList.addEventListener('change', (e) => {
+    const checkbox = e.target;
+    const label = checkbox.parentElement.querySelector('label')
+    if(!label.classList.contains('checked')){
+        label.classList.add('checked')
+    }
+    else{
+        label.classList.remove('checked')
+    }
+
+})
+
 function addTask(task, taskList) {
+
     const li = document.createElement('li');
     const input = document.createElement('input');
     const label = document.createElement('label');
