@@ -1,12 +1,10 @@
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-tasks.forEach(task => {
-    const taskList = document.getElementById('task-list');
-    const li = document.createElement('li');
-    taskList.appendChild(li);
-    li.id = `task-${task.id}`
+const taskList = document.getElementById('task-list');
+
+function createListInnerHTML(li, listLabel) {
     li.innerHTML = `<div class="left">
     <input type="checkbox">
-    <label >${task.label}</label>
+    <label >${listLabel}</label>
 </div>
 <div class="right">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="gray"
@@ -16,6 +14,13 @@ tasks.forEach(task => {
     </svg>
 
 </div>`
+}
+
+tasks.forEach(task => {
+    const li = document.createElement('li');
+    taskList.appendChild(li);
+    li.id = `task-${task.id}`;
+    createListInnerHTML(li, task.label);
     if (task.checked) {
         li.querySelector('input').checked = true
         li.querySelector('label').classList.add('checked');
@@ -24,12 +29,10 @@ tasks.forEach(task => {
 
 
 const form = document.getElementById('task-form');
-const taskList = document.getElementById('task-list');
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     const taskInput = document.getElementById('task-input');
-    const taskList = document.getElementById('task-list');
 
     addTask(taskInput.value, taskList);
     taskInput.value = "";
@@ -67,20 +70,8 @@ function addTask(task, taskList) {
     taskList.appendChild(li);
     const idTask = tasks.length === 0 ? 1 : tasks.at(-1).id + 1;
     li.id = `task-${idTask}`
-    li.innerHTML = `<div class="left">
-    <input type="checkbox">
-    <label >${task}</label>
-</div>
-<div class="right">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="gray"
-        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x delete">
-        <path d="M18 6 6 18" />
-        <path d="m6 6 12 12" />
-    </svg>
-
-</div>`
+    createListInnerHTML(li, task);
     tasks.push({ id: idTask, label: task, checked: false })
-    
     console.log(tasks)
     localStorage.setItem("tasks", JSON.stringify(tasks))
 }
