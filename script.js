@@ -1,10 +1,10 @@
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 const taskList = document.getElementById('task-list');
 
-function createListInnerHTML(li, listLabel) {
+function createListInnerHTML(li) {
     li.innerHTML = `<div class="left">
     <input type="checkbox">
-    <label >${listLabel}</label>
+    <label></label>
 </div>
 <div class="right">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="gray"
@@ -20,7 +20,8 @@ tasks.forEach(task => {
     const li = document.createElement('li');
     taskList.appendChild(li);
     li.id = `task-${task.id}`;
-    createListInnerHTML(li, task.label);
+    createListInnerHTML(li);
+    li.querySelector('label').textContent = task.label;
     if (task.checked) {
         li.querySelector('input').checked = true
         li.querySelector('label').classList.add('checked');
@@ -70,7 +71,8 @@ function addTask(task, taskList) {
     taskList.appendChild(li);
     const idTask = tasks.length === 0 ? 1 : tasks.at(-1).id + 1;
     li.id = `task-${idTask}`
-    createListInnerHTML(li, task);
+    createListInnerHTML(li);
+    li.querySelector('label').textContent = task;
     tasks.push({ id: idTask, label: task, checked: false })
     console.log(tasks)
     localStorage.setItem("tasks", JSON.stringify(tasks))
