@@ -43,7 +43,6 @@ form.addEventListener('submit', (e) => {
 taskList.addEventListener('change', (e) => {
     const checkbox = e.target;
     const idTask = Number(checkbox.closest('li').id.slice(5));
-    console.log(idTask)
     const task = tasks.find(task => task.id === idTask)
     const label = checkbox.parentElement.querySelector('label')
     if (!label.classList.contains('checked')) {
@@ -73,8 +72,7 @@ function addTask(task, taskList) {
     li.id = `task-${idTask}`
     createListInnerHTML(li);
     li.querySelector('label').textContent = task;
-    tasks.push({ id: idTask, label: task, checked: false })
-    console.log(tasks)
+    tasks.push({ id: idTask, label: task, checked: false });
     localStorage.setItem("tasks", JSON.stringify(tasks))
 }
 
